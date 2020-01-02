@@ -5,7 +5,7 @@ const helpers = require("./helpers")
 const restricted = require("../auth/restricted.js");
 
 router.get(`/`, (req, res) => {
-    helpers.getPost()
+    helpers.getPosts()
 
         .then(post => {
             res.status(200).json(post);
@@ -43,15 +43,15 @@ router.delete("/delete/:id", restricted, (req, res) => {
         });
 });
 
-router.get("/:username", restricted, (req, res) => {
-    let username = req.params.username;
+router.get("/:user_id", restricted, (req, res) => {
+    let user_id = req.params.user_id;
 
-    helpers.getByUsername(username)
+    helpers.getByUserId(user_id)
         .then(post => {
             res.status(201).send(post);
         })
         .catch(err => {
-            res.status(401).json({ error: "User does not exist." });
+            res.status(401).json({ error: "User does not have any posts." });
         });
 });
 

@@ -7,19 +7,20 @@ const db = require("../../dbconfig");
 
 router.post("/register", (req, res) => {
   const user = req.body;
+  console.log(req.body)
 
-  if (!user.username || !user.password || !user.email) {
+  if (!user.username || !user.password || !user.email || !user.location) {
     res.status(400).json({
       error: "Missing a required field"
     });
   } else {
     const hashed = bcrypt.hashSync(user.password, 10);
     user.password = hashed;
+    console.log(user)
     db("newUsers")
       .insert(user)
       .then(ids => {
         const id = ids[0];
-
         db("newUsers")
           .where({ id })
           .first()
