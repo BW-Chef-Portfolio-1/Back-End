@@ -14,11 +14,11 @@ exports.up = function(knex) {
       posts.string("servings", 255)
       posts
         .integer("user_id")
-        .unsigned()
-        .references("id")
-        .inTable("newUsers")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        // .unsigned()
+        // .references("id")
+        // .inTable("newUsers")
+        // .onDelete("CASCADE")
+        // .onUpdate("CASCADE");
     });
   };
   
