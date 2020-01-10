@@ -15,7 +15,7 @@ router.get(`/`, (req, res) => {
         });
 });
 
-router.post("/post", (req, res) => {
+router.post("/post", restricted, (req, res) => {
     let post = req.body;
 
     helpers.add(post)
@@ -27,7 +27,7 @@ router.post("/post", (req, res) => {
         });
 });
 
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", restricted, (req, res) => {
     let id = req.params.id;
 
     helpers.remove(id)
@@ -68,7 +68,7 @@ router.get("/recipeId/:recipeId", (req, res) => {
 });
 
 
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", restricted, (req, res) => {
     const id = req.params.id;
     const action = req.body;
 

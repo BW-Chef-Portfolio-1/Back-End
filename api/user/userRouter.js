@@ -4,7 +4,7 @@ const db = require("../../dbconfig");
 const helpers = require("./user-helpers");
 const restricted = require("../auth/restricted.js");
 
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", restricted,  (req, res) => {
     id = req.params.id
     console.log(id)
     update = req.body
@@ -19,7 +19,7 @@ router.put("/update/:id", (req, res) => {
     })
 })
 
-router.get("/user/:id", (req, res) => {
+router.get("/user/:id", restricted , (req, res) => {
     id = req.params.id
     console.log(id)
     helpers.getUser(id)
