@@ -1,7 +1,7 @@
 const db = require("../../dbconfig");
 
 module.exports = {
-  getPosts,
+  getsongs,
   add,
   getBy,
   getByUserId,
@@ -10,42 +10,43 @@ module.exports = {
   getById
 };
 
-function getPosts() {
-  return db("posts");
+function getsongs() {
+  return db("songs");
 }
 
 function getByUserId(user_id) {
-  return db("posts")
+  return db("users")
   .where("user_id", user_id);
 }
 
 function getById(id) {
-  return db("posts").where("id", id).first();
+  return db("songs").where("id", song_id).first();
 }
 
 function getBy(filter) {
-  return db("posts")
+  return db("songs")
     .where(filter)
     .first();
 }
 
-function add(posts) {
-  return db("posts")
-    .insert(posts)
+function add(songs) {
+  console.log(songs)
+  return db("songs")
+    .insert(songs)
     .then(ids => {
-      return getById(ids[0])
+      getById(ids[0])
       .first()
     });
 }
 
 function remove(id) {
-  return db("posts")
-    .where("id", id)
+  return db("songs")
+    .where("song_id", id)
     .del();
 }
 
 function update(id, changes) {
-  return db("posts")
+  return db("songs")
     .where({ id: id })
     .update(changes)
     .then(count => (count > 0 ? getById(id) : null));

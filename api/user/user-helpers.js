@@ -7,16 +7,16 @@ module.exports = {
 }
 
 function update(id, update) {
-    return db('newUsers')
+    return db('users')
     .where({ id })
     .update(update)
 }
 
 function getUser(id) {
-    return db('newUsers')
+    return db('users')
     .where( { id } )
 }
 
 function getAllUsers() {
-    return db('newUsers')
+    return db('users')
 }

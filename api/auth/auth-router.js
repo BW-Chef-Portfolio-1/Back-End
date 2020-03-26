@@ -9,7 +9,7 @@ router.post("/register", (req, res) => {
   const user = req.body;
   console.log(req.body)
 
-  if (!user.username || !user.password || !user.email || !user.location) {
+  if (!user.password || !user.email ) {
     res.status(400).json({
       error: "Missing a required field"
     });
@@ -17,20 +17,21 @@ router.post("/register", (req, res) => {
     const hashed = bcrypt.hashSync(user.password, 10);
     user.password = hashed;
     console.log(user)
-    db("newUsers")
+    db("users")
       .insert(user)
       .then(ids => {
-        const id = ids[0];
-        db("newUsers")
-          .where({ id })
+        const user_id = ids[0];
+        db("users")
+          .where({ user_id })
           .first()
           .then(user => {
             const token = tokens.generateToken(user);
             res
               .status(201)
-              .json({ id: user.id, username: user.username, token });
+              .json({ id: user.user_id, email: user.email, token });
           })
           .catch(error => {
+            console.log(error)
             res.status(500).json({
               error: "Couldn't add to database"
             });
@@ -53,7 +54,7 @@ router.post("/login", (req, res) => {
       error: "Please provide a username and password."
     });
   } else {
-    db("newUsers")
+    db("users")
       .where({ username })
       .first()
       .then(user => {

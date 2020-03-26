@@ -5,7 +5,7 @@ const helpers = require("./helpers")
 const restricted = require("../auth/restricted.js");
 
 router.get(`/`, (req, res) => {
-    helpers.getPosts()
+    helpers.getsongs()
 
         .then(post => {
             res.status(200).json(post);
@@ -17,13 +17,12 @@ router.get(`/`, (req, res) => {
 
 router.post("/post", (req, res) => {
     let post = req.body;
-
     helpers.add(post)
         .then(info => {
             res.status(201).json(info);
         })
         .catch(err => {
-            res.status(500).json(error);
+            res.status(500).json(err);
         });
 });
 
@@ -50,20 +49,20 @@ router.get("/user/:userId", (req, res) => {
             res.status(201).json(post);
         })
         .catch(err => {
-            res.status(401).json({ error: "User does not have any posts." });
+            res.status(401).json({ error: "User does not have any songs." });
         });
 });
 
-router.get("/recipeId/:recipeId", (req, res) => {
-    let recipeId = req.params.recipeId;
-    console.log(recipeId)
+router.get("/songs/:songID", (req, res) => {
+    let songID = req.params.songID;
+    console.log(songID)
 
-    helpers.getById(recipeId)
+    helpers.getById(songID)
         .then(post => {
             res.status(201).json(post);
         })
         .catch(err => {
-            res.status(401).json({ error: "User does not have any posts." });
+            res.status(401).json({ error: "User does not have any songs." });
         });
 });
 
