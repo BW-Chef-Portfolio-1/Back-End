@@ -40,7 +40,7 @@ router.post("/register", (req, res) => {
       .catch(error => {
         console.log(error.message)
         res.status(400).json({
-          error: "Must have a unique username!",
+          error: "Must have a unique email!",
           response: error.response
         });
       });
@@ -48,24 +48,24 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  let { username, password } = req.body;
-  if (!username || !password) {
+  let { email, password } = req.body;
+  if (!email || !password) {
     res.status(400).json({
-      error: "Please provide a username and password."
+      error: "Please provide a email and password."
     });
   } else {
     db("users")
-      .where({ username })
+      .where({ email })
       .first()
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = tokens.generateToken(user);
           res
             .status(200)
-            .json({ message: `${user.username} is logged in.`, id: user.id, token });
+            .json({ message: `${user.email} is logged in.`, id: user.id, token });
         } else {
           res.status(401).json({
-            error: "Please provide the correct username and password."
+            error: "Please provide the correct email and password."
           });
         }
       })
